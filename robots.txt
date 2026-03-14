@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /thank-you.html
+Allow: /
+
+Sitemap: https://www.peakcitygarages.ca/sitemap.xml
