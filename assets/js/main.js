@@ -90,6 +90,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ============================================
+       ACTIVE NAV ITEM HIGHLIGHT
+    ============================================ */
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-menu .nav-item > a, .dropdown-content a');
+    navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (linkPath === currentPath) {
+            // Add active to the item itself
+            link.classList.add('active');
+            // If it's a direct child of .nav-item, add active to .nav-item
+            if (link.parentElement.classList.contains('nav-item')) {
+                link.parentElement.classList.add('active');
+            }
+            // If it's inside dropdown-content, add active to the parent nav-item
+            if (link.parentElement.classList.contains('dropdown-content')) {
+                const parentNavItem = link.parentElement.closest('.nav-item');
+                if (parentNavItem) parentNavItem.classList.add('active');
+            }
+        }
+    });
+
+    /* ============================================
        FAQ ACCORDION
     ============================================ */
     const faqItems = document.querySelectorAll('.faq-item');
@@ -171,40 +193,195 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ============================================
-       FORM VALIDATION
+       FORM VALIDATION & EMAILJS
     ============================================ */
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init("bxB7gh1jwQrNXwRZ3"); // Public Key
+    }
+
     const forms = document.querySelectorAll('form[id]');
     forms.forEach(form => {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Basic validation
             let isValid = true;
-            const required = form.querySelectorAll('[required]');
+            const requiredFields = form.querySelectorAll('[required]');
+            const submitBtn = form.querySelector('[type="submit"]');
+            const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
 
-            required.forEach(field => {
+            requiredFields.forEach(field => {
                 if (!field.value.trim()) {
                     isValid = false;
-                    field.style.borderColor = '#E8A020';
-                    field.style.boxShadow = '0 0 0 3px rgba(232,160,32,0.20)';
+                    field.style.borderColor = '#e53e3e';
                 } else {
                     field.style.borderColor = '';
-                    field.style.boxShadow = '';
                 }
             });
 
-            // Reset error on input
-            required.forEach(field => {
-                field.addEventListener('input', () => {
-                    if (field.value.trim()) {
-                        field.style.borderColor = '';
-                        field.style.boxShadow = '';
-                    }
-                }, { once: false });
-            });
+            if (!isValid) {
+                console.warn('Form validation failed.');
+                return;
+            }
 
-            if (isValid) {
+            // Check reCAPTCHA if it exists on the page
+            const recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+            if (document.querySelector('.g-recaptcha') && !recaptchaResponse) {
+                alert('Please complete the reCAPTCHA verification to submit.');
+                return;
+            }
+
+            // EmailJS Sending
+            if (typeof emailjs !== 'undefined') {
+                try {
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '⏳ Sending...';
+                    }
+
+                    // Prepare template parameters
+                    const formData = new FormData(form);
+                    const templateParams = {
+                        from_name: formData.get('name') || 'Not specified',
+                        name: formData.get('name') || 'Not specified',             // Added for {{name}} in Auto-Reply
+                        from_email: formData.get('email') || 'Not specified',
+                        to_email: formData.get('email') || 'Not specified',        // Customer's email for Auto-Reply
+                        from_phone: formData.get('phone') || 'Not specified',
+                        service_type: formData.get('service') || formData.get('type') || 'Not specified',
+                        title: 'Quote Request for ' + (formData.get('service') || formData.get('type') || 'Garage'), // Added for {{title}}
+                        property_address: formData.get('address') || 'Not specified',
+                        message: formData.get('message') || 'Not specified',
+                        lead_source: formData.get('source') || 'Direct',
+                        business_email: 'constructyyc@gmail.com',
+                        'g-recaptcha-response': typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : ''
+                    };
+
+                    const templateID = 'template_gl0tx58';
+
+                    const result = await emailjs.send('service_d4bggik', templateID, templateParams);
+                    
+                    // Show success
+                    if (document.getElementById('form-success')) {
+                        form.style.display = 'none';
+                        document.getElementById('form-success').style.display = 'block';
+                    } else {
+                        window.location.href = 'thank-you.html';
+                    }
+                } catch (error) {
+                    console.error('EmailJS Error:', error);
+                    if (document.getElementById('form-error')) {
+                        document.getElementById('form-error').style.display = 'block';
+                    } else {
+                        alert('Something went wrong. Please call us at +1 (587) 439-7703');
+                    }
+                } finally {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnText;
+                    }
+                }
+            } else {
+                console.error('EmailJS library not loaded.');
                 window.location.href = 'thank-you.html';
             }
         });
     });
+
+    /* ============================================
+       PRICING BLUR - ENSURE PERMANENT IF LOCKED
+    ============================================ */
+    if (localStorage.getItem('peakcity_pricing_unlocked') !== 'true') {
+        const blurWrappers = document.querySelectorAll('.price-blur-wrapper');
+        blurWrappers.forEach(w => {
+            w.style.cursor = 'default';
+            w.style.pointerEvents = 'none';
+        });
+    }
+
+    // ===== DYNAMIC EXIT INTENT POPUP =====
+    if (!sessionStorage.getItem('peakcity_exit_intent_shown')) {
+        // Create popup elements
+        const exitPopup = document.createElement('div');
+        exitPopup.id = 'exit-intent-popup';
+        exitPopup.className = 'exit-popup-overlay';
+        exitPopup.style.display = 'none';
+        
+        exitPopup.innerHTML = `
+            <div class="exit-popup-card">
+                <button class="exit-popup-close" aria-label="Close popup">&times;</button>
+                <div class="exit-popup-content">
+                    <span class="exit-popup-badge">Wait! Before You Go...</span>
+                    <h3>Get $1,000 Off Your Custom Garage Build</h3>
+                    <p>Claim your early-booking voucher and get our Free 2026 Custom Garage Planning Checklist delivered to your inbox instantly.</p>
+                    <form class="exit-popup-form" id="exit-popup-form">
+                        <input type="text" id="exit-name" placeholder="Your Name" required>
+                        <input type="email" id="exit-email" placeholder="Your Email Address" required>
+                        <button type="submit" class="btn btn-primary">🎯 Send My Discount &amp; Checklist</button>
+                    </form>
+                    <p class="exit-popup-footer">No obligation. 100% spam-free. Valid for all 2026 builds.</p>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(exitPopup);
+
+        // Track cursor leaving viewport
+        let exitTriggered = false;
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY < 20 && !exitTriggered) {
+                exitTriggered = true;
+                sessionStorage.setItem('peakcity_exit_intent_shown', 'true');
+                exitPopup.style.display = 'flex';
+                // Trigger CSS transitions
+                setTimeout(() => { exitPopup.classList.add('show'); }, 10);
+            }
+        });
+
+        // Close function
+        const closePopup = () => {
+            exitPopup.classList.remove('show');
+            setTimeout(() => { exitPopup.style.display = 'none'; }, 300);
+        };
+
+        exitPopup.querySelector('.exit-popup-close').addEventListener('click', closePopup);
+        exitPopup.addEventListener('click', (e) => { if (e.target === exitPopup) closePopup(); });
+
+        // Handle submission
+        const exitForm = document.getElementById('exit-popup-form');
+        if (exitForm) {
+            exitForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('exit-name').value;
+                const email = document.getElementById('exit-email').value;
+                const submitBtn = exitForm.querySelector('button');
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = 'Sending...';
+                }
+
+                if (typeof emailjs !== 'undefined') {
+                    try {
+                        const templateParams = {
+                            from_name: name,
+                            name: name,
+                            from_email: email,
+                            to_email: 'constructyyc@gmail.com',
+                            service_type: 'Exit Intent Lead',
+                            title: 'Exit Intent Lead: ' + name,
+                            message: 'User claimed the exit-intent discount and checklist on peakcitygarages.ca. Name: ' + name + ', Email: ' + email,
+                            business_email: 'constructyyc@gmail.com'
+                        };
+                        await emailjs.send('service_d4bggik', 'template_gl0tx58', templateParams);
+                    } catch (err) {
+                        console.error('Error sending lead via EmailJS:', err);
+                    }
+                }
+
+                // Redirect to thank you
+                window.location.href = 'thank-you.html';
+            });
+        }
+    }
 
 });

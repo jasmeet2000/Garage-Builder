@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO -->
+    <title>Gallery | Custom Detached Garage Projects | PeakCity Garages</title>
+    <meta name="description" content="View our portfolio of custom detached, double, and triple car garages built in Calgary and surrounding areas. Get inspiration for your dream garage.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="PeakCity Garages Calgary">
+
+    <!-- Geo Meta Tags -->
+    <meta name="geo.region" content="CA-AB">
+    <meta name="geo.placename" content="Calgary">
+    <meta name="geo.position" content="51.0447;-114.0719">
+    <meta name="ICBM" content="51.0447, -114.0719">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.peakcitygarages.ca/gallery.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.peakcitygarages.ca/gallery.html">
+    <meta property="og:title" content="Gallery | Custom Detached Garage Projects | PeakCity Garages">
+    <meta property="og:description" content="View our portfolio of custom detached, double, and triple car garages built in Calgary and surrounding areas. Get inspiration for your dream garage.">
+    <meta property="og:image" content="https://www.peakcitygarages.ca/assets/images/hero.png">
+    <meta property="og:locale" content="en_CA">
+    <meta property="og:site_name" content="PeakCity Garages Calgary">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gallery | Custom Detached Garage Projects | PeakCity Garages">
+    <meta name="twitter:description" content="View our portfolio of custom detached, double, and triple car garages built in Calgary and surrounding areas. Get inspiration for your dream garage.">
+    <meta name="twitter:image" content="https://www.peakcitygarages.ca/assets/images/hero.png">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231B3A6B'/%3E%3Cpolygon points='50,15 85,40 85,85 15,85 15,40' fill='%23E8A020' opacity='0.9'/%3E%3Crect x='35' y='55' width='30' height='30' fill='%231B3A6B'/%3E%3Crect x='38' y='58' width='10' height='12' fill='%23E8A020'/%3E%3Crect x='52' y='58' width='10' height='12' fill='%23E8A020'/%3E%3C/svg%3E">
+
+    <!-- BreadcrumbList JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.peakcitygarages.ca/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Project Gallery",
+          "item": "https://www.peakcitygarages.ca/gallery.html"
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        /* Gallery Filter System */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            background: var(--grey-light);
+            border: 2px solid var(--grey-mid);
+            color: var(--navy);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--amber);
+            border-color: var(--amber);
+            color: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            border-top: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-top-color: var(--amber);
+        }
+
+        .gallery-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/11;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.06);
+        }
+
+        .gallery-card-info {
+            padding: 20px;
+        }
+
+        .gallery-card-info h4 {
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .gallery-card-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .gallery-tag {
+            display: inline-block;
+            background: var(--amber-light);
+            color: var(--amber-dark);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Fullscreen Lightbox */
+        .lightbox-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 35, 71, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .lightbox-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-img {
+            max-height: 75vh;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+
+        .lightbox-caption {
+            color: var(--white);
+            margin-top: 15px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .lightbox-caption h4 {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .lightbox-caption p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--amber);
+        }
+    </style>
+
+    <!-- Google Tag (gtag.js) - Replace G-PLACEHOLDER with real ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+      gtag('config', 'G-PLACEHOLDER');
+    </script>
+
+    <!-- Facebook Pixel Code - Replace FB-PIXEL-PLACEHOLDER with real ID -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {{if(f.fbq)return;n=f.fbq=function(){{n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)}};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'FB-PIXEL-PLACEHOLDER');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=FB-PIXEL-PLACEHOLDER&ev=PageView&noscript=1"/></noscript>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-contact">
+                <span><i class="fa-solid fa-phone"></i> <a href="tel:+15874397703">+1 (587) 439-7703</a></span>
+                <span><i class="fa-solid fa-envelope"></i> <a href="mailto:constructyyc@gmail.com">constructyyc@gmail.com</a></span>
+                <span><i class="fa-solid fa-location-dot"></i> Calgary, AB &amp; Surrounding Areas</span>
+            </div>
+            <div class="top-bar-right">
+                <div class="top-bar-social">
+                    <a href="https://facebook.com/peakcitygarages" target="_blank" rel="noopener" aria-label="PeakCity Garages on Facebook" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/peakcitygarages" target="_blank" rel="noopener" aria-label="PeakCity Garages on Instagram" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://g.page/peakcitygarages" target="_blank" rel="noopener" aria-label="PeakCity Garages on Google" class="social-icon google"><i class="fab fa-google"></i></a>
+                </div>
+                <a href="contact.html" class="btn btn-primary btn-sm">Free Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="index.html" class="logo" aria-label="PeakCity Garages — Home">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="42" height="42" rx="8" fill="#1B3A6B" />
+                        <path d="M6 23L21 10L36 23" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <rect x="9" y="22" width="24" height="13" rx="1" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
+                        <rect x="14" y="26" width="14" height="9" rx="1" fill="#E8A020" opacity="0.9" />
+                        <line x1="14" y1="29" x2="28" y2="29" stroke="#1B3A6B" stroke-width="1.2" />
+                        <line x1="14" y1="32" x2="28" y2="32" stroke="#1B3A6B" stroke-width="1.2" />
+                        <line x1="21" y1="26" x2="21" y2="35" stroke="#1B3A6B" stroke-width="1.2" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="wordmark">PEAK<span>CITY</span></span>
+                    <span class="tagline">Garages Calgary</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu" aria-label="Main navigation">
+                <div class="nav-item"><a href="index.html">Home</a></div>
+                <div class="nav-item">
+                    <a href="#" class="dropdown-toggle">Services ▾</a>
+                    <div class="dropdown-content">
+                        <a href="garage-builder-calgary.html">All Services</a>
+                        <a href="detached-garage-calgary.html">Detached Garages</a>
+                        <a href="double-garage-calgary.html">Double &amp; Triple Garages</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="garage-cost-calgary.html" class="dropdown-toggle">Pricing &#9662;</a>
+                    <div class="dropdown-content">
+                        <a href="garage-cost-calgary.html">2026 Pricing Guide</a>
+                        <!-- <a href="garage-cost-calculator.html"><i class="fa-solid fa-calculator" style="margin-right:6px; color:var(--amber);"></i>Cost Calculator</a> -->
+                    </div>
+                </div>
+                <div class="nav-item"><a href="about.html">About</a></div>
+                <div class="nav-item"><a href="contact.html">Contact</a></div>
+                <div class="nav-item nav-cta">
+                    <a href="tel:+15874397703" class="btn btn-primary btn-sm"><i class="fa-solid fa-phone"></i> Call Now</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-underline"></div>
+            <h1>Our Custom <span>Garage Gallery</span></h1>
+            <p>Explore real projects built by our expert crews in Calgary, Airdrie, Cochrane, and Okotoks.</p>
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="index.html">Home</a> &rsaquo; <span>Gallery</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- GALLERY GRID SECTION -->
+    <section class="section-padding">
+        <div class="container">
+            
+            <!-- Filters -->
+            <div class="filter-container fade-up">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="detached">Detached Garages</button>
+                <button class="filter-btn" data-filter="double">Double Car</button>
+                <button class="filter-btn" data-filter="triple">Triple Car</button>
+                <button class="filter-btn" data-filter="workshop">Workshops</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="gallery-grid fade-up">
+                
+                <!-- Project 1 -->
+                <div class="gallery-card" data-category="double detached" onclick="openLightbox('assets/images/gallery-evanston.webp', 'Double Detached Garage', 'Evanston, Calgary NW — 22\'x22\' Custom Build')">
+                    <div class="gallery-img-wrapper">
+                        <img width="640" height="640" src="assets/images/gallery-evanston.webp" alt="Double detached garage Evanston Calgary" loading="lazy">
+                    </div>
+                    <div class="gallery-card-info">
+                        <h4>Double Detached Garage</h4>
+                        <p>Evanston, Calgary NW</p>
+                        <span class="gallery-tag">Double Car</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="gallery-card" data-category="triple detached workshop" onclick="openLightbox('assets/images/gallery-mahogany.webp', 'Luxury Triple Garage', 'Mahogany, Calgary SE — Premium 32\'x22\' Custom Workshop')">
+                    <div class="gallery-img-wrapper">
+                        <img width="640" height="640" src="assets/images/gallery-mahogany.webp" alt="Luxury triple garage Mahogany Calgary" loading="lazy">
+                    </div>
+                    <div class="gallery-card-info">
+                        <h4>Luxury Triple Garage</h4>
+                        <p>Mahogany, Calgary SE</p>
+                        <span class="gallery-tag">Triple Car</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="gallery-card" data-category="detached" onclick="openLightbox('assets/images/gallery-bridgeland.webp', 'Single Detached Garage', 'Bridgeland, Calgary — 14\'x22\' Inner-city Custom Build')">
+                    <div class="gallery-img-wrapper">
+                        <img width="640" height="640" src="assets/images/gallery-bridgeland.webp" alt="Single detached garage Bridgeland Calgary" loading="lazy">
+                    </div>
+                    <div class="gallery-card-info">
+                        <h4>Single Detached Garage</h4>
+                        <p>Bridgeland, Calgary</p>
+                        <span class="gallery-tag">Detached</span>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="gallery-card" data-category="double detached" onclick="openLightbox('assets/images/hero.webp', 'Oversized Double Garage', 'Chestermere, AB — 24\'x24\' Detached Family Garage')">
+                    <div class="gallery-img-wrapper">
+                        <img width="640" height="640" src="assets/images/hero.webp" alt="Oversized double garage Chestermere" loading="lazy">
+                    </div>
+                    <div class="gallery-card-info">
+                        <h4>Oversized Double Garage</h4>
+                        <p>Chestermere, AB</p>
+                        <span class="gallery-tag">Double Car</span>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="gallery-card" data-category="detached" onclick="openLightbox('assets/images/detached-garage.webp', 'Modern Detached Garage', 'Cochrane, AB — Matching home trim & siding')">
+                    <div class="gallery-img-wrapper">
+                        <img width="640" height="640" src="assets/images/detached-garage.webp" alt="Modern detached garage Cochrane" loading="lazy">
+                    </div>
+                    <div class="gallery-card-info">
+                        <h4>Modern Detached Garage</h4>
+                        <p>Cochrane, AB</p>
+                        <span class="gallery-tag">Detached</span>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="gallery-card" data-category="double workshop" onclick="openLightbox('assets/images/double-garage.webp', 'Workshop Garage', 'Okotoks, AB — 22\'x24\' Insulated and Heated mechanical workshop')">
+                    <div class="gallery-img-wrapper">
+                        <img width="640" height="640" src="assets/images/double-garage.webp" alt="Workshop garage Okotoks" loading="lazy">
+                    </div>
+                    <div class="gallery-card-info">
+                        <h4>Workshop Garage</h4>
+                        <p>Okotoks, AB</p>
+                        <span class="gallery-tag">Workshop</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged garage build image">
+            <div class="lightbox-caption">
+                <h4 id="lightbox-title"></h4>
+                <p id="lightbox-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="logo logo-footer">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="42" height="42" rx="8" fill="#0F2347" />
+                                <path d="M6 23L21 10L36 23" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <rect x="9" y="22" width="24" height="13" rx="1" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" />
+                                <rect x="14" y="26" width="14" height="9" rx="1" fill="#E8A020" opacity="0.85" />
+                                <line x1="14" y1="29" x2="28" y2="29" stroke="#0F2347" stroke-width="1.2" />
+                                <line x1="14" y1="32" x2="28" y2="32" stroke="#0F2347" stroke-width="1.2" />
+                                <line x1="21" y1="26" x2="21" y2="35" stroke="#0F2347" stroke-width="1.2" />
+                            </svg>
+                        </div>
+                        <div class="logo-text">
+                            <span class="wordmark">PEAK<span>CITY</span></span>
+                            <span class="tagline">Garages Calgary</span>
+                        </div>
+                    </a>
+                    <p class="footer-tagline">Calgary's trusted garage builders since 2014. Licensed, insured, 500+ garages built.</p>
+                    <div class="footer-contact">
+                        <a href="tel:+15874397703"><i class="fa-solid fa-phone"></i> <strong>+1 (587) 439-7703</strong></a>
+                        <a href="mailto:constructyyc@gmail.com"><i class="fa-solid fa-envelope"></i> constructyyc@gmail.com</a>
+                        <span><i class="fa-solid fa-location-dot"></i> Calgary, AB (All Quadrants)</span>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <nav class="footer-links">
+                        <a href="index.html">Home</a>
+                        <a href="garage-builder-calgary.html">Services</a>
+                        <a href="garage-cost-calgary.html">Pricing Guide</a>
+                        <!-- <a href="garage-cost-calculator.html">Cost Calculator</a> -->
+                        <a href="about.html">About Us</a>
+                        <a href="blog.html">Blog &amp; Resources</a>
+                        <a href="contact.html">Contact</a>
+                    </nav>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <nav class="footer-links">
+                        <a href="detached-garage-calgary.html">Detached Garages</a>
+                        <a href="double-garage-calgary.html">Double Car Garages</a>
+                        <a href="double-garage-calgary.html">Triple Car Garages</a>
+                        <a href="garage-builder-calgary.html">Concrete &amp; Foundations</a>
+                        <a href="garage-builder-calgary.html">Permits &amp; Drawings</a>
+                        <a href="garage-cost-calgary.html">Garage Packages</a>
+                    </nav>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <div class="footer-contact">
+                        <a href="tel:+15874397703" style="color:var(--amber); font-weight:700;"><i class="fa-solid fa-phone"></i> +1 (587) 439-7703</a>
+                        <a href="mailto:constructyyc@gmail.com"><i class="fa-solid fa-envelope"></i> constructyyc@gmail.com</a>
+                        <span>Mon–Fri: 8am – 6pm</span>
+                        <span>Sat: 9am – 4pm</span>
+                        <span>Sun: 9am – 4pm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© 2026 PeakCity Garages. All Rights Reserved. | <a href="privacy-policy.html">Privacy Policy</a></p>
+                <p>Proudly serving Calgary, Airdrie, Cochrane, Chestermere &amp; Okotoks</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MOBILE STICKY CALL BAR -->
+    <div class="mobile-cta-bar" aria-label="Call PeakCity Garages">
+        <a href="tel:+15874397703"><i class="fa-solid fa-phone"></i> TAP TO CALL — +1 (587) 439-7703</a>
+    </div>
+
+    <!-- Zero-dependency JS filter system + Lightbox -->
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.gallery-card');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Set active class
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                cards.forEach(card => {
+                    const categories = card.getAttribute('data-category').split(' ');
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox functionality
+        function openLightbox(src, title, desc) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const titleEl = document.getElementById('lightbox-title');
+            const descEl = document.getElementById('lightbox-desc');
+
+            img.src = src;
+            titleEl.textContent = title;
+            descEl.textContent = desc;
+
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

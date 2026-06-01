@@ -1,0 +1,19 @@
+# ===== PEAKCITY GARAGES — .gitignore =====
+
+# AI memory & project documentation (internal use only)
+MEMORY.md
+
+# Python utility/dev scripts (not needed on web server)
+*.py
+
+# OS & editor junk files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# IDE folders
+.vscode/
+.idea/
