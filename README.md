@@ -26,7 +26,7 @@ no frameworks.
 
 ## 🛠️ Tech Stack
 HTML5, CSS3, Vanilla JS, Montserrat font, EmailJS, 
-Google reCAPTCHA, JSON-LD schema for SEO
+Google reCAPTCHA, JSON-LD schema for SEO, Contact Us Form Added
 
 ## 🚀 Run Locally
 python -m http.server 8080
